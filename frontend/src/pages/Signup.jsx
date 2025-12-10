@@ -7,20 +7,22 @@ export default function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
 
-    // Call backend API
-    const response = await fetch("http://localhost:5000/auth/signup", {
+    const handleSubmit = async (e) => {
+    e.preventDefault();
+    const response = await fetch("http://localhost:5000/api/auth/signup", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username, email, password }),
     });
 
     const data = await response.json();
+    console.log("Signup response:", data); // ✅ debug
+
     if (response.ok) {
+      localStorage.setItem("token", data.token); // ✅ save token
       alert("Signup successful!");
-      window.location.href = "/login";
+      window.location.href = "/expense";
     } else {
       alert(data.error || "Signup failed");
     }

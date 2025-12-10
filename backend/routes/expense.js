@@ -2,23 +2,22 @@ import express from "express";
 import Expense from "../models/expense.js";
 import { auth } from "../middlewares/auth.js";
 
-const router = express.Router();
 
+const router = express.Router();
 router.post("/", auth, async (req, res) => {
   try {
     const { title, amount, category, date, notes } = req.body;
     if (!title || amount === undefined) {
-
       return res.status(400).json({ error: "Title and amount are required" });
     }
 
     const expense = new Expense({
-      userId: req.userId, 
+      userId: req.userId,
       title,
       amount,
       category,
       date,
-      notes,
+      notes
     });
 
     await expense.save();
@@ -27,6 +26,7 @@ router.post("/", auth, async (req, res) => {
     res.status(500).json({ error: "Server error", details: err.message });
   }
 });
+
 
 
 router.get("/", auth, async (req, res) => {
