@@ -19,6 +19,8 @@ console.log("Token being sent:", token);
         { headers: { Authorization: `Bearer ${token}` } }
       );
       alert("Expense added!");
+      window.location.href = "/dashboard";
+
     } catch (err) {
       alert("Error adding expense");
     }
@@ -99,8 +101,10 @@ console.log("Token being sent:", token);
           >
             Add Expense
           </button>
+          
         </form>
       </div>
     </div>
+    
   );
 }

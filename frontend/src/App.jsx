@@ -8,6 +8,7 @@ import Dashboard from "./pages/Dashboard";
 import { Navigate } from "react-router-dom";
 import { useState } from "react";
 import Expense from "./pages/Expense";
+import Analytics from "./pages/Analytics";
 
 function App() {
   const [token, setToken] = useState(localStorage.getItem("token"));
@@ -20,6 +21,7 @@ function App() {
         <Route path="/login" element={<Login/>} />
         <Route path="/dashboard" element={token ? <Dashboard/> : <Navigate to="/login" />}/>
         <Route path="/expense" element={token ? <Expense /> : <Navigate to="/login" />} />
+        <Route path="/analytics" element={token ? <Analytics /> : <Navigate to="/login" />} />
 
 
 
