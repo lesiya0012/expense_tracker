@@ -6,10 +6,10 @@ export default function Dashboard() {
   const [expenses, setExpenses] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // ✅ Edit state
+  
   const [editing, setEditing] = useState(null);
 
-  // ✅ Delete function
+  
   const handleDelete = async (id) => {
     const token = localStorage.getItem("token");
 
@@ -25,9 +25,9 @@ export default function Dashboard() {
     }
   };
 
-  // ✅ Start editing
+  
   const startEdit = (exp) => {
-    setEditing({ ...exp }); // clone object
+    setEditing({ ...exp }); 
   };
 
   // ✅ Save edited expense
@@ -68,10 +68,14 @@ export default function Dashboard() {
       .get("http://localhost:5000/api/expenses", {
         headers: { Authorization: `Bearer ${token}` },
       })
-      .then((res) => {
-        setExpenses(res.data);
-        setLoading(false);
-      })
+.then((res) => {
+  const sorted = [...res.data].sort(
+    (a, b) => new Date(b.date) - new Date(a.date)
+  );
+
+  setExpenses(sorted);
+  setLoading(false);
+})
       .catch((err) => {
         console.error(err);
         setLoading(false);

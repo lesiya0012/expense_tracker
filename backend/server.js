@@ -6,6 +6,7 @@ import expenseRoutes from "./routes/expense.js";
 import authRoutes from "./routes/auth.js";
 import meRouter from "./routes/me.js";
 import analyticsRouter from "./routes/analytics.js";
+import incomeRoutes from "./routes/income.js";
 dotenv.config();
 
 const app = express();
@@ -18,6 +19,7 @@ app.use("/api/expenses", expenseRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/me", meRouter);
 app.use("/api/analytics", analyticsRouter);
+app.use("/api/income", incomeRoutes);
 
 
 

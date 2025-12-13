@@ -3,30 +3,42 @@ import Navbar from "../components/Navbar";
 import { useState } from "react";
 
 export default function Signup() {
-  const [username, setUsername] = useState("");
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+ const [error, setError] = useState("");
 
-
-    const handleSubmit = async (e) => {
+  
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await fetch("http://localhost:5000/api/auth/signup", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, email, password }),
-    });
+    setError(""); 
 
-    const data = await response.json();
-    console.log("Signup response:", data); // ✅ debug
+    
+    if (!email || !password) {
+      setError("Email and password are required");
+      return;
+    }
+try {
+      const response = await fetch("http://localhost:5000/api/auth/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, password }),
+      });
 
-    if (response.ok) {
-      localStorage.setItem("token", data.token); // ✅ save token
-      alert("Signup successful!");
-      window.location.href = "/expense";
-    } else {
-      alert(data.error || "Signup failed");
+      const data = await response.json();
+      console.log("Signup response:", data);
+
+      if (response.ok) {
+        localStorage.setItem("token", data.token);
+        window.location.href = "/expense"; 
+      } else {
+        setError(data.error || "Signup failed");
+      }
+    } catch (err) {
+      setError("Server error: " + err.message);
     }
   };
+
 
   return (
     <>
@@ -40,14 +52,19 @@ export default function Signup() {
             Fill in your details to get started
           </p>
 
-          <form className="space-y-3" onSubmit={handleSubmit}>
+         <form className="space-y-3" onSubmit={handleSubmit} noValidate>
+            {error && (
+  <div className="bg-red-100 text-red-700 px-4 py-2 rounded text-sm mb-3">
+    {error}
+  </div>
+)}
             <div>
               <label className="block text-md font-medium text-gray-700 mb-2">Username</label>
               <input
                 type="text"
                 placeholder="Your username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                value={name}
+                onChange={(e) => setName(e.target.value)}
                 className="mt-1 w-full px-3 py-1.5 mb-2 border border-gray-300 rounded-md focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 text-sm"
               />
             </div>

@@ -1,18 +1,27 @@
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";  // ✅ import navigate
+import { useNavigate } from "react-router-dom";  
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate();  // ✅ initialize navigate
+  const navigate = useNavigate();  
+  const [error, setError] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError(""); 
+
+    
+    if (!email || !password) {
+      setError("Email and password are required");
+      return;
+    }
+
 
     try {
-      const response = await fetch("http://localhost:5000/api/auth/login", {  // ✅ fixed URL
+      const response = await fetch("http://localhost:5000/api/auth/login", {  
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
@@ -21,13 +30,13 @@ export default function Login() {
       const data = await response.json();
 
       if (response.ok) {
-        localStorage.setItem("token", data.token); // ✅ save token
-        navigate("/dashboard"); // ✅ redirect
+        localStorage.setItem("token", data.token); 
+        navigate("/dashboard"); 
       } else {
-        alert(data.error || "Login failed"); // backend sends { error: "..."}
+         setError(data.error || "Login failed");
       }
     } catch (err) {
-      alert("Server error: " + err.message);
+     setError("Server error: " + err.message);
     }
   };
 
@@ -35,15 +44,19 @@ export default function Login() {
     <>
       <Navbar />
       <div className="min-h-screen flex">
-        {/* Left: Login Form */}
+      
         <div className="w-full md:w-1/2 flex flex-col justify-center px-20 bg-white">
           <h2 className="text-4xl font-bold text-gray-800 mb-4">Welcome back</h2>
           <p className="text-2xl text-gray-700 mb-7">
             Enter your credentials to access your account
           </p>
 
-          {/* ✅ attach handleSubmit to form */}
-          <form className="space-y-3" onSubmit={handleSubmit}>
+          <form className="space-y-3" onSubmit={handleSubmit} noValidate>
+            {error && (
+            <div className="bg-red-100 text-red-700 px-4 py-2 rounded text-sm mb-3">
+              {error}
+                </div>
+                  )}
             <div>
               <label className="block text-md font-medium text-gray-700 mb-2">Email</label>
               <input
@@ -86,7 +99,7 @@ export default function Login() {
           </p>
         </div>
 
-        {/* Right: Promo Panel */}
+
         <div className="hidden md:flex w-1/2 bg-emerald-50 flex-col justify-center mb-16 items-center px-8">
           <p className="text-3xl font-medium text-gray-700 mb-2">
             Join 50,000+ users managing their finances

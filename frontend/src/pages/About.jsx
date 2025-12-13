@@ -12,6 +12,14 @@ export default function About() {
         <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight">
           Ready to Take Control of <span className="text-emerald-400">Your Finances?</span>
         </h2>
+        <p className="mt-4 text-slate-300">
+  TrackIt is designed to make money management simple, clear, and stress‑free. 
+  No complicated dashboards, no confusing charts — just clean insights that help you 
+  understand your spending and stay in control.
+</p>
+
+
+
         <p className="mt-6 text-lg text-slate-300">
           Join thousands of users who have transformed their financial habits with TrackIt.
           Start your journey to financial freedom today — completely free.
