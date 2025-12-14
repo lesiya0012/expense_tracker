@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import UserNavbar from "../components/UserNavbar";
-
+const API = import.meta.env.VITE_API_BASE_URL || "/api";
 export default function Expense() {
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState("");
@@ -15,7 +15,7 @@ export default function Expense() {
 console.log("Token being sent:", token);
     try {
       await axios.post(
-        "http://localhost:5000/api/expenses",
+        `${API}/expenses`,
         { title, amount, category, date, notes },
         { headers: { Authorization: `Bearer ${token}` } }
       );

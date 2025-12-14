@@ -1,7 +1,7 @@
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import { useState } from "react";
-
+const API = import.meta.env.VITE_API_BASE_URL || "/api";
 export default function Signup() {
 const [name, setName] = useState("");
 const [email, setEmail] = useState("");
@@ -19,7 +19,7 @@ const [error, setError] = useState("");
       return;
     }
 try {
-      const response = await fetch("http://localhost:5000/api/auth/signup", {
+      const response = await fetch(`${API}/auth/signup`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, email, password }),

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import UserNavbar from "../components/UserNavbar";
-
+const API = import.meta.env.VITE_API_BASE_URL || "/api";
 export default function Income() {
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState("");
@@ -13,7 +13,7 @@ export default function Income() {
 
   // ✅ Fetch income list
   const fetchIncome = async () => {
-    const res = await axios.get("http://localhost:5000/api/income", {
+    const res = await axios.get(`${API}/income`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     setIncomeList(res.data);
@@ -28,7 +28,7 @@ export default function Income() {
     e.preventDefault();
 
     await axios.post(
-      "http://localhost:5000/api/income",
+      `${API}/income`,
       { title, amount, date, category },
       { headers: { Authorization: `Bearer ${token}` } }
     );

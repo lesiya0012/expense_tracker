@@ -17,6 +17,7 @@ import {
   Bar,
   ResponsiveContainer
 } from "recharts";
+const API = import.meta.env.VITE_API_BASE_URL || "/api";
 
 // Group items by month
 function groupByMonth(items) {
@@ -55,34 +56,33 @@ export default function Analytics() {
 
     const fetchAll = async () => {
       try {
-        const summaryRes = await axios.get(
-          "http://localhost:5000/api/analytics/summary?start=2025-12-01&end=2025-12-31",
-          { headers: { Authorization: `Bearer ${token}` } }
-        );
+       const summaryRes = await axios.get(
+  `${API}/analytics/summary?start=2025-12-01&end=2025-12-31`,
+  { headers: { Authorization: `Bearer ${token}` } }
+);
 
-        const timeseriesRes = await axios.get(
-          "http://localhost:5000/api/analytics/timeseries?start=2025-12-01&end=2025-12-31&group=day",
-          { headers: { Authorization: `Bearer ${token}` } }
-        );
+const timeseriesRes = await axios.get(
+  `${API}/analytics/timeseries?start=2025-12-01&end=2025-12-31&group=day`,
+  { headers: { Authorization: `Bearer ${token}` } }
+);
 
-        const expensesRes = await axios.get(
-          "http://localhost:5000/api/expenses",
-          { headers: { Authorization: `Bearer ${token}` } }
-        );
+const expensesRes = await axios.get(`${API}/expenses`, {
+  headers: { Authorization: `Bearer ${token}` },
+});
 
-        const incomesRes = await axios.get(
-          "http://localhost:5000/api/income",
-          { headers: { Authorization: `Bearer ${token}` } }
-        );
+const incomesRes = await axios.get(`${API}/income`, {
+  headers: { Authorization: `Bearer ${token}` },
+});
 
-        const [expenseAgg, incomeAgg] = await Promise.all([
-          axios.get("http://localhost:5000/api/analytics/monthly-expenses", {
-            headers: { Authorization: `Bearer ${token}` },
-          }),
-          axios.get("http://localhost:5000/api/analytics/monthly-income", {
-            headers: { Authorization: `Bearer ${token}` },
-          }),
-        ]);
+const [expenseAgg, incomeAgg] = await Promise.all([
+  axios.get(`${API}/analytics/monthly-expenses`, {
+    headers: { Authorization: `Bearer ${token}` },
+  }),
+  axios.get(`${API}/analytics/monthly-income`, {
+    headers: { Authorization: `Bearer ${token}` },
+  }),
+]);
+
 
         setSummary(summaryRes.data || null);
         setTimeseries(timeseriesRes.data || []);

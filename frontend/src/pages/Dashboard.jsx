@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import UserNavbar from "../components/UserNavbar";
-
+const API = import.meta.env.VITE_API_BASE_URL || "/api";
 export default function Dashboard() {
   const [expenses, setExpenses] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -11,7 +11,7 @@ export default function Dashboard() {
     const token = localStorage.getItem("token");
 
     try {
-      await axios.delete(`http://localhost:5000/api/expenses/${id}`, {
+      await axios.delete(`${API}/expenses/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -31,7 +31,7 @@ export default function Dashboard() {
 
     try {
       const res = await axios.put(
-        `http://localhost:5000/api/expenses/${editing._id}`,
+        `${API}/expenses/${editing._id}`,
         {
           title: editing.title,
           amount: Number(editing.amount),
@@ -58,7 +58,7 @@ export default function Dashboard() {
     const token = localStorage.getItem("token");
 
     axios
-      .get("http://localhost:5000/api/expenses", {
+      .get(`${API}/expenses`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
