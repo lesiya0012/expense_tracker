@@ -7,6 +7,7 @@ import authRoutes from "./routes/auth.js";
 import meRouter from "./routes/me.js";
 import analyticsRouter from "./routes/analytics.js";
 import incomeRoutes from "./routes/income.js";
+
 dotenv.config();
 
 const app = express();
@@ -21,8 +22,6 @@ app.use("/api/me", meRouter);
 app.use("/api/analytics", analyticsRouter);
 app.use("/api/income", incomeRoutes);
 
-
-
 // Health check route
 app.get("/", (req, res) => {
   res.json({ status: "OK", message: "Expense Tracker API running" });
@@ -31,15 +30,18 @@ app.get("/", (req, res) => {
 // Connect to MongoDB
 const PORT = process.env.PORT || 4000;
 console.log("Mongo URI:", process.env.MONGODB_URI);
+
 mongoose
   .connect(process.env.MONGODB_URI)
   .then(() => {
-    console.log(" Connected to MongoDB");
-   
+    console.log("Connected to MongoDB");
+
+    // ✅ START THE SERVER ONLY AFTER DB CONNECTS
+    app.listen(PORT, () => {
+      console.log(`✅ Server running on port ${PORT}`);
+    });
   })
   .catch((err) => {
     console.error("MongoDB connection error:", err.message);
     process.exit(1);
   });
-
-  export default app;
