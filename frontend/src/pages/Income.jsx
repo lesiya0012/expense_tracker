@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import UserNavbar from "../components/UserNavbar";
-const API = import.meta.env.VITE_API_BASE_URL || "/api";
+const API = import.meta.env.VITE_API_BASE_URL ;
 export default function Income() {
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState("");

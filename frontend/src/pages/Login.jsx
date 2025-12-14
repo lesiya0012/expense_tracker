@@ -2,7 +2,7 @@ import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";  
-const API = import.meta.env.VITE_API_BASE_URL || "/api";
+const API = import.meta.env.VITE_API_BASE_URL ;
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

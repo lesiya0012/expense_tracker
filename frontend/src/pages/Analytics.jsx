@@ -17,7 +17,7 @@ import {
   Bar,
   ResponsiveContainer
 } from "recharts";
-const API = import.meta.env.VITE_API_BASE_URL || "/api";
+const API = import.meta.env.VITE_API_BASE_URL ;
 
 // Group items by month
 function groupByMonth(items) {
