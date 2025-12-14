@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import UserNavbar from "../components/UserNavbar";
 
 export default function Expense() {
   const [title, setTitle] = useState("");
@@ -28,7 +29,10 @@ console.log("Token being sent:", token);
 
 
   return (
+    <div>
+    <UserNavbar/>
     <div className="min-h-screen flex items-center justify-center bg-emerald-50 p-6">
+  
       <div className="w-full max-w-md bg-white shadow-lg rounded-lg p-8">
         <h1 className="text-2xl font-bold text-emerald-600 mb-6 text-center">
           Add New Expense
@@ -83,17 +87,7 @@ console.log("Token being sent:", token);
             />
           </div>
 
-          <div>
-            <label className="block text-sm font-medium text-emerald-700 mb-1">
-              Notes
-            </label>
-            <input
-              value={notes}
-              onChange={(e) => setNotes(e.target.value)}
-              placeholder="Additional notes"
-              className="w-full px-3 py-2 border border-emerald-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"
-            />
-          </div>
+          
 
           <button
             type="submit"
@@ -104,6 +98,7 @@ console.log("Token being sent:", token);
           
         </form>
       </div>
+    </div>
     </div>
     
   );

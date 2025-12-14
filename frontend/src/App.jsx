@@ -15,6 +15,7 @@ function App() {
   const [token, setToken] = useState(localStorage.getItem("token"));
 
   return (
+
     <Router>
       <Routes>
         <Route path="/" element={<MainPage />} />
@@ -32,6 +33,7 @@ function App() {
 
       </Routes>
     </Router>
+    
   );
 }
 

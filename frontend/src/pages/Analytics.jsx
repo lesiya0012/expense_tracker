@@ -191,18 +191,18 @@ const categoryArray = Object.keys(categoryTotals).map((cat) => ({
  return (
   <>
     <UserNavbar />
-
+<div className="min-h-screen bg-emerald-50 p-6">
     <div className="p-6">
-      <h1 className="text-3xl font-bold mb-6">Analytics</h1>
+      <h1 className="text-3xl font-bold text-emerald-800 justify-center  text-center mb-6">Analytics</h1>
 
       {/* ✅ Month Dropdown */}
       {allMonths.length > 0 && (
-        <div className="mb-6">
-          <label className="font-semibold mr-3">Select Month:</label>
+        <div className="mb-9">
+          <label className="font-semibold text-xl mr-3 text-emerald-950 ">Select Month:</label>
           <select
             value={selectedMonth}
             onChange={(e) => setSelectedMonth(e.target.value)}
-            className="border px-3 py-2 rounded"
+            className="border px-3 py-2 rounded  border-emerald-300  focus:outline-none focus:ring-2 focus:ring-emerald-500"
           >
             {allMonths.map((m) => (
               <option key={m} value={m}>{m}</option>
@@ -259,18 +259,28 @@ const categoryArray = Object.keys(categoryTotals).map((cat) => ({
             Income vs Expense ({selectedMonth})
           </h2>
 
-          <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={[
-              { name: "Income", value: totalIncomeForMonth },
-              { name: "Expense", value: totalExpenseForMonth }
-            ]}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" />
-              <YAxis />
-              <Tooltip />
-              <Bar dataKey="value" fill="#10b981" />
-            </BarChart>
-          </ResponsiveContainer>
+         <ResponsiveContainer width="100%" height={300}>
+  <BarChart
+    data={[
+      { name: "Income", value: totalIncomeForMonth },
+      { name: "Expense", value: totalExpenseForMonth }
+    ]}
+  >
+    <CartesianGrid strokeDasharray="3 3" />
+    <XAxis dataKey="name" />
+    <YAxis />
+    <Tooltip />
+
+    <Bar
+      dataKey="value"
+      fill="#10b981"              
+      animationDuration={1100}    
+      animationBegin={100}        
+      animationEasing="ease-out"  
+    />
+  </BarChart>
+</ResponsiveContainer>
+
         </div>
 
       </div>
@@ -301,6 +311,9 @@ const categoryArray = Object.keys(categoryTotals).map((cat) => ({
                     cy="50%"
                     outerRadius={100}
                     label
+                    animationDuration={1500}     // ✅ Smooth animation
+      animationBegin={600}         // ✅ Delay for polished effect
+      animationEasing="ease-out" 
                   >
                     {categoryArray.map((entry, index) => (
                       <Cell key={index} fill={COLORS[index % COLORS.length]} />
@@ -311,53 +324,84 @@ const categoryArray = Object.keys(categoryTotals).map((cat) => ({
               </ResponsiveContainer>
             </div>
 
-            <div>
-              <ResponsiveContainer width="100%" height={300}>
-                <BarChart data={categoryArray} layout="vertical" margin={{ left: 40 }}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis type="number" />
-                  <YAxis type="category" dataKey="category" width={100} />
-                  <Tooltip />
-                  <Legend />
-                  <Bar dataKey="total" fill="#3b82f6" name="Spend" />
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
+        <div>
+  <ResponsiveContainer width="100%" height={300}>
+    <BarChart
+      data={categoryArray}
+      layout="vertical"
+      margin={{ left: 40 }}
+    >
+      <CartesianGrid strokeDasharray="3 3" />
+      <XAxis type="number" />
+      <YAxis type="category" dataKey="category" width={100} />
+      <Tooltip />
+      <Legend />
+
+<Bar
+  dataKey="total"
+  name="Spend"
+  animationDuration={1500}
+  animationBegin={600}
+>
+  {categoryArray.map((entry, index) => (
+    <Cell key={index} fill={COLORS[index % COLORS.length]} />
+  ))}
+</Bar>
+    </BarChart>
+  </ResponsiveContainer>
+</div>
+
 
           </div>
         </div>
       )}
 
       {/* ✅ Month-Specific Expense History */}
-      <div className="bg-white p-6 shadow rounded mt-6">
-        <h2 className="text-xl font-semibold mb-3">Expense History ({selectedMonth})</h2>
+     <div className="bg-white p-6 shadow rounded border border-emerald-200 mt-6">
+  <h2 className="text-xl font-semibold text-black mb-3">
+    Expense History ({selectedMonth})
+  </h2>
 
-        <ul className="space-y-2">
-          {selectedExpenses.map((item) => (
-            <li key={item._id} className="border-b pb-2 flex justify-between text-gray-700">
-              <span>{new Date(item.date).toLocaleDateString()}</span>
-              <span>{item.title}</span>
-              <span>₹{item.amount}</span>
-            </li>
-          ))}
-        </ul>
-      </div>
+  <ul className="space-y-2">
+    {selectedExpenses.map((item) => (
+      <li
+        key={item._id}
+        className="border-b border-emerald-100 pb-2 flex justify-between text-gray-700"
+      >
+        <span className="text-emerald-700 font-medium">
+          {new Date(item.date).toLocaleDateString()}
+        </span>
+        <span>{item.title}</span>
+        <span className="font-semibold text-red-600">₹{item.amount}</span>
+      </li>
+    ))}
+  </ul>
+</div>
+
 
       {/* ✅ Month-Specific Income History */}
-      <div className="bg-white p-6 shadow rounded mt-6">
-        <h2 className="text-xl font-semibold mb-3">Income History ({selectedMonth})</h2>
+     <div className="bg-white p-6 shadow rounded border border-emerald-200 mt-6">
+  <h2 className="text-xl font-semibold text-black mb-3">
+    Income History ({selectedMonth})
+  </h2>
 
-        <ul className="space-y-2">
-          {selectedIncomes.map((inc) => (
-            <li key={inc._id} className="border-b pb-2 flex justify-between text-gray-700">
-              <span>{new Date(inc.date).toLocaleDateString()}</span>
-              <span>{inc.title}</span>
-              <span>₹{inc.amount}</span>
-            </li>
-          ))}
-        </ul>
-      </div>
+  <ul className="space-y-2">
+    {selectedIncomes.map((inc) => (
+      <li
+        key={inc._id}
+        className="border-b border-emerald-100 pb-2 flex justify-between text-gray-700"
+      >
+        <span className="text-emerald-700 font-medium">
+          {new Date(inc.date).toLocaleDateString()}
+        </span>
+        <span>{inc.title}</span>
+        <span className="font-semibold text-emerald-600">₹{inc.amount}</span>
+      </li>
+    ))}
+  </ul>
+</div>
 
+    </div>
     </div>
   </>
 );

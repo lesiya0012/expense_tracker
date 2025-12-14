@@ -51,7 +51,7 @@ export default function Login() {
             Enter your credentials to access your account
           </p>
 
-          <form className="space-y-3" onSubmit={handleSubmit} noValidate>
+          <form className="space-y-3" onSubmit={handleSubmit} noValidate autoComplete="off">
             {error && (
             <div className="bg-red-100 text-red-700 px-4 py-2 rounded text-sm mb-3">
               {error}
@@ -72,15 +72,12 @@ export default function Login() {
               <label className="block text-md font-medium text-gray-700 mb-2">Password</label>
               <input
                 type="password"
+                placeholder="your password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="mt-1 w-full px-3 py-1.5 border border-gray-300 rounded-md focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 text-sm"
               />
-              <div className="text-right mt-2.5">
-                <a href="#" className="text-s text-emerald-600 hover:underline">
-                  Forgot password?
-                </a>
-              </div>
+              
             </div>
 
             <button

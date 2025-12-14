@@ -3,10 +3,10 @@ import Navbar from "../components/Navbar";
 import { useState } from "react";
 
 export default function Signup() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
- const [error, setError] = useState("");
+const [name, setName] = useState("");
+const [email, setEmail] = useState("");
+const [password, setPassword] = useState("");
+const [error, setError] = useState("");
 
   
   const handleSubmit = async (e) => {
@@ -52,7 +52,7 @@ try {
             Fill in your details to get started
           </p>
 
-         <form className="space-y-3" onSubmit={handleSubmit} noValidate>
+         <form className="space-y-3" onSubmit={handleSubmit} noValidate autoComplete="off">
             {error && (
   <div className="bg-red-100 text-red-700 px-4 py-2 rounded text-sm mb-3">
     {error}
@@ -62,7 +62,7 @@ try {
               <label className="block text-md font-medium text-gray-700 mb-2">Username</label>
               <input
                 type="text"
-                placeholder="Your username"
+                placeholder="your username"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 className="mt-1 w-full px-3 py-1.5 mb-2 border border-gray-300 rounded-md focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 text-sm"
@@ -85,6 +85,7 @@ try {
               <input
                 type="password"
                 value={password}
+                placeholder="your password"
                 onChange={(e) => setPassword(e.target.value)}
                 className="mt-1 w-full px-3 py-1.5 border border-gray-300 rounded-md focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 text-sm"
               />

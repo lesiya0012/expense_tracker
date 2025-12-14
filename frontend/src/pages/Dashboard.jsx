@@ -5,17 +5,14 @@ import UserNavbar from "../components/UserNavbar";
 export default function Dashboard() {
   const [expenses, setExpenses] = useState([]);
   const [loading, setLoading] = useState(true);
-
-  
   const [editing, setEditing] = useState(null);
 
-  
   const handleDelete = async (id) => {
     const token = localStorage.getItem("token");
 
     try {
       await axios.delete(`http://localhost:5000/api/expenses/${id}`, {
-        headers: { Authorization: `Bearer ${token}` }
+        headers: { Authorization: `Bearer ${token}` },
       });
 
       setExpenses((prev) => prev.filter((exp) => exp._id !== id));
@@ -25,12 +22,10 @@ export default function Dashboard() {
     }
   };
 
-  
   const startEdit = (exp) => {
-    setEditing({ ...exp }); 
+    setEditing({ ...exp });
   };
 
-  // ✅ Save edited expense
   const saveEdit = async () => {
     const token = localStorage.getItem("token");
 
@@ -48,7 +43,6 @@ export default function Dashboard() {
         }
       );
 
-      // Update UI
       setExpenses((prev) =>
         prev.map((exp) => (exp._id === editing._id ? res.data : exp))
       );
@@ -60,7 +54,6 @@ export default function Dashboard() {
     }
   };
 
-  // ✅ Fetch expenses
   useEffect(() => {
     const token = localStorage.getItem("token");
 
@@ -68,14 +61,14 @@ export default function Dashboard() {
       .get("http://localhost:5000/api/expenses", {
         headers: { Authorization: `Bearer ${token}` },
       })
-.then((res) => {
-  const sorted = [...res.data].sort(
-    (a, b) => new Date(b.date) - new Date(a.date)
-  );
+      .then((res) => {
+        const sorted = [...res.data].sort(
+          (a, b) => new Date(b.date) - new Date(a.date)
+        );
 
-  setExpenses(sorted);
-  setLoading(false);
-})
+        setExpenses(sorted);
+        setLoading(false);
+      })
       .catch((err) => {
         console.error(err);
         setLoading(false);
@@ -88,23 +81,31 @@ export default function Dashboard() {
     <>
       <UserNavbar />
 
-      <div className="min-h-screen bg-gray-50 p-6">
-        <h1 className="text-3xl font-bold mb-6">Your Expenses</h1>
+      <div className="min-h-screen bg-emerald-50 p-6">
+        <h1 className="text-3xl font-bold text-emerald-700 mb-6 text-center">
+          Your Expenses
+        </h1>
 
         {expenses.length === 0 ? (
-          <p>No expenses yet. Add one!</p>
+          <p className="text-center text-gray-600">
+            No expenses yet. Add one!
+          </p>
         ) : (
-          <div className="space-y-4">
+          <div className="space-y-4 max-w-3xl mx-auto">
             {expenses.map((exp) => (
               <div
                 key={exp._id}
-                className="p-4 bg-white shadow rounded border flex justify-between items-center"
+                className="p-4 bg-white shadow-md rounded-lg border border-emerald-200 flex justify-between items-center"
               >
                 <div>
-                  <h2 className="text-xl font-semibold">{exp.title}</h2>
-                  <p>Amount: ₹{exp.amount}</p>
-                  <p>Category: {exp.category || "None"}</p>
-                  <p>
+                  <h2 className="text-xl font-semibold text-emerald-700">
+                    {exp.title}
+                  </h2>
+                  <p className="text-gray-700">₹{exp.amount}</p>
+                  <p className="text-gray-600">
+                    Category: {exp.category || "None"}
+                  </p>
+                  <p className="text-gray-600">
                     Date:{" "}
                     {exp.date
                       ? new Date(exp.date).toLocaleDateString()
@@ -134,8 +135,10 @@ export default function Dashboard() {
 
         {/* ✅ Edit Form */}
         {editing && (
-          <div className="mt-6 p-4 bg-white shadow rounded border">
-            <h2 className="text-xl font-bold mb-4">Edit Expense</h2>
+          <div className="mt-8 max-w-md mx-auto bg-white shadow-lg rounded-lg p-6 border border-emerald-200">
+            <h2 className="text-xl font-bold text-emerald-700 mb-4">
+              Edit Expense
+            </h2>
 
             <input
               type="text"
@@ -143,7 +146,7 @@ export default function Dashboard() {
               onChange={(e) =>
                 setEditing({ ...editing, title: e.target.value })
               }
-              className="border p-2 w-full mb-3"
+              className="w-full px-3 py-2 border border-emerald-300 rounded-md mb-3 focus:outline-none focus:ring-2 focus:ring-emerald-500"
               placeholder="Title"
             />
 
@@ -153,7 +156,7 @@ export default function Dashboard() {
               onChange={(e) =>
                 setEditing({ ...editing, amount: e.target.value })
               }
-              className="border p-2 w-full mb-3"
+              className="w-full px-3 py-2 border border-emerald-300 rounded-md mb-3 focus:outline-none focus:ring-2 focus:ring-emerald-500"
               placeholder="Amount"
             />
 
@@ -163,7 +166,7 @@ export default function Dashboard() {
               onChange={(e) =>
                 setEditing({ ...editing, category: e.target.value })
               }
-              className="border p-2 w-full mb-3"
+              className="w-full px-3 py-2 border border-emerald-300 rounded-md mb-3 focus:outline-none focus:ring-2 focus:ring-emerald-500"
               placeholder="Category"
             />
 
@@ -173,22 +176,24 @@ export default function Dashboard() {
               onChange={(e) =>
                 setEditing({ ...editing, date: e.target.value })
               }
-              className="border p-2 w-full mb-3"
+              className="w-full px-3 py-2 border border-emerald-300 rounded-md mb-3 focus:outline-none focus:ring-2 focus:ring-emerald-500"
             />
 
-            <button
-              onClick={saveEdit}
-              className="bg-emerald-600 text-white px-4 py-2 rounded"
-            >
-              Save
-            </button>
+            <div className="flex gap-3 mt-4">
+              <button
+                onClick={saveEdit}
+                className="bg-emerald-600 text-white px-4 py-2 rounded hover:bg-emerald-700"
+              >
+                Save
+              </button>
 
-            <button
-              onClick={() => setEditing(null)}
-              className="ml-3 bg-gray-400 text-white px-4 py-2 rounded"
-            >
-              Cancel
-            </button>
+              <button
+                onClick={() => setEditing(null)}
+                className="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500"
+              >
+                Cancel
+              </button>
+            </div>
           </div>
         )}
       </div>

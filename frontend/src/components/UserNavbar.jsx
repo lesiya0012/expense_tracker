@@ -13,10 +13,11 @@ export default function UserNavbar() {
   return (
     <nav className="bg-emerald-600 text-white px-6 py-3">
       <div className="flex justify-between items-center">
-        {/* Logo */}
-        <div className="font-bold text-xl">Expense Tracker</div>
+      
+       
+        <Link to="/" className=" font-bold text-2xl mx-4 hover:text-emerald-200 transition-colors duration-200">TrackIt</Link>
 
-        {/* Hamburger Button (Mobile) */}
+       
         <button
           className="lg:hidden text-white text-2xl"
           onClick={() => setOpen(!open)}
@@ -24,7 +25,7 @@ export default function UserNavbar() {
           {open ? "✖" : "☰"}
         </button>
 
-        {/* Desktop Menu */}
+        
         <div className="hidden lg:flex gap-6">
           
           <Link to="/dashboard" className="hover:underline">Dashboard</Link>
@@ -35,7 +36,7 @@ export default function UserNavbar() {
         </div>
       </div>
 
-      {/* Mobile Dropdown Menu */}
+     
       {open && (
         <div className="flex flex-col gap-4 mt-4 lg:hidden bg-emerald-700 p-4 rounded">
           <Link to="/dashboard" className="hover:underline" onClick={() => setOpen(false)}>Dashboard</Link>
