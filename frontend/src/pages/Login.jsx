@@ -21,7 +21,9 @@ export default function Login() {
 
 
     try {
-      const response = await fetch(`${API}/auth/login`, {  
+    //;
+      //console.log("Sending login request to:", url);
+      const response = await fetch(`https://expense-tracker-back-d25o.onrender.com/api/auth/login`, {  
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
