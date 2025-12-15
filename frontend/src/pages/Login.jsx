@@ -2,7 +2,7 @@ import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";  
-const API = import.meta.env.VITE_API_BASE_URL ;
+const API = import.meta.env.VITE_API_BASE_URL || "https://expensetrackerfront-neon.vercel.app/api";
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -23,7 +23,7 @@ export default function Login() {
     try {
     //;
       //console.log("Sending login request to:", url);
-      const response = await fetch(`${API}/auth/signup`, {  
+      const response = await fetch(`${API}/auth/login`, {  
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
