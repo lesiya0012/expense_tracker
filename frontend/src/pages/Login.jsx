@@ -23,7 +23,7 @@ export default function Login() {
     try {
     //;
       //console.log("Sending login request to:", url);
-      const response = await fetch(`https://expense-tracker-back-d25o.onrender.com/api/auth/login`, {  
+      const response = await fetch(`https://expense-tracker-jet-chi-39.vercel.app/api/auth/signup`, {  
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
